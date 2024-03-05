@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/Model/Production.php";
+require_once __DIR__ . "/Model/Genre.php";
 require_once __DIR__ . "/Data/db.php";
 ?>
 
@@ -30,6 +31,10 @@ require_once __DIR__ . "/Data/db.php";
         <th>Titolo</th>
         <th>Lingua</th>
         <th>Voto</th>
+        <th>Genere</th>
+        <th>Incassi</th>
+        <th>Durata</th>
+        <th>Stagioni</th>
     </thead>
 
     <tbody class="table-group-divider">
@@ -45,6 +50,39 @@ require_once __DIR__ . "/Data/db.php";
                 <td>
                     <?= $production->vote ?>
                 </td>
+                <td>
+                    <ul>
+                        <?php foreach ($production->genres as $genre): ?>
+                            <li>
+                                <h5>
+                                    <?= $genre->name ?>
+                                </h5>
+                                <?= $genre->description ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </td>
+                <?php if ($production instanceof Movie): ?>
+                    <td>
+                        <?= $production->revenue ?>
+                    </td>
+                    <td>
+                        <?= $production->length ?>
+                    </td>
+                    <td>
+                        -
+                    </td>
+                <?php elseif ($production instanceof Tv): ?>
+                    <td>
+                        -
+                    </td>
+                    <td>
+                        -
+                    </td>
+                    <td>
+                        <?= $production->seasons ?>
+                    </td>
+                <?php endif; ?>
             </tr>
         <?php endforeach; ?>
 
